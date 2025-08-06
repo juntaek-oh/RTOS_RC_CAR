@@ -1,4 +1,4 @@
-# RTOS_RC_CAR – FreeRTOS 기반 STM32 자율주행 RC카
+#  FreeRTOS 기반 STM32 자율주행 RC카
 
 ![RC Car Demo](demo.gif)
 
