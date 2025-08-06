@@ -1,10 +1,10 @@
-#  FreeRTOS 기반 STM32 자율주행 RC카
+# FreeRTOS 기반 STM32 자율주행 RC카
 
-![KakaoTalk_20250806_164222677 (2) (1)](https://github.com/user-attachments/assets/5129212e-a56d-4a65-9e91-40769a18b2fb)
+<img src="https://github.com/user-attachments/assets/5129212e-a56d-4a65-9e91-40769a18b2fb" width="350"/>
+
+<img src="https://github.com/user-attachments/assets/95b3667e-6938-45e2-a393-8460dc290677" width="350"/>
+
 ---
-
-![KakaoTalk_20250806_164222677 (3) (1)](https://github.com/user-attachments/assets/95b3667e-6938-45e2-a393-8460dc290677)
-
 
 STM32CubeIDE와 FreeRTOS로 구현한 자율주행 RC카 프로젝트입니다. 멀티 Task 구조와 실시간 센서·모터 제어, 블루투스 무선 제어를 통해 장애물 회피 및 경로 추종을 실현합니다.
 
@@ -47,21 +47,19 @@ STM32CubeIDE와 FreeRTOS로 구현한 자율주행 RC카 프로젝트입니다. 
 ## 소프트웨어 아키텍처
 
 ### Task 구성
-```c
 // 초음파 센서 Task (Normal Priority)
 void Ultrasonic_01(void *argument) {
-    HCSR04_Trigger1();  // 우측 센서
-    HCSR04_Trigger2();  // 중앙 센서  
-    HCSR04_Trigger3();  // 좌측 센서
+HCSR04_Trigger1(); // 우측 센서
+HCSR04_Trigger2(); // 중앙 센서
+HCSR04_Trigger3(); // 좌측 센서
 }
 
 // 모터 제어 Task (Low Priority)
 void Moving_01(void *argument) {
-    // 블루투스 명령 처리
-    // 자율주행 로직 실행
-    if (isAutoMode) moving();
+// 블루투스 명령 처리
+// 자율주행 로직 실행
+if (isAutoMode) moving();
 }
-```
 
 ### 핵심 알고리즘
 - **장애물 회피**: 3방향 센서 데이터 융합으로 최적 경로 결정
@@ -73,9 +71,7 @@ void Moving_01(void *argument) {
 ## 사용 방법
 
 ### 1. 프로젝트 설정
-```bash
 git clone https://github.com/juntaek-oh/RTOS_RC_CAR.git
-```
 - STM32CubeIDE에서 Import → Existing Projects into Workspace
 
 ### 2. 빌드 및 플래시
@@ -125,20 +121,18 @@ git clone https://github.com/juntaek-oh/RTOS_RC_CAR.git
 
 ## 파일 구조
 
-```
 RTOS_RC_CAR/
 ├── Inc/
-│   ├── FreeRTOSConfig.h    # FreeRTOS 설정
-│   ├── main.h              # 메인 헤더
-│   ├── ultrasonic.h        # 센서/모터 제어
-│   └── ...
+│ ├── FreeRTOSConfig.h # FreeRTOS 설정
+│ ├── main.h # 메인 헤더
+│ ├── ultrasonic.h # 센서/모터 제어
+│ └── ...
 ├── Src/
-│   ├── main.c              # 메인 함수, 하드웨어 초기화
-│   ├── freertos.c          # Task 정의 및 스케줄러
-│   ├── ultrasonic.c        # 센서 및 모터 제어 로직
-│   └── ...
+│ ├── main.c # 메인 함수, 하드웨어 초기화
+│ ├── freertos.c # Task 정의 및 스케줄러
+│ ├── ultrasonic.c # 센서 및 모터 제어 로직
+│ └── ...
 └── README.md
-```
 
 ---
 
