@@ -1,6 +1,9 @@
 #  FreeRTOS 기반 STM32 자율주행 RC카
 
-![KakaoTalk_20250806_164222677](https://github.com/user-attachments/assets/1792cd7e-4e28-4ed6-8053-4131adf1d5e6)
+![KakaoTalk_20250806_164222677 (2) (1)](https://github.com/user-attachments/assets/5129212e-a56d-4a65-9e91-40769a18b2fb)
+---
+
+![KakaoTalk_20250806_164222677 (3) (1)](https://github.com/user-attachments/assets/95b3667e-6938-45e2-a393-8460dc290677)
 
 
 STM32CubeIDE와 FreeRTOS로 구현한 자율주행 RC카 프로젝트입니다. 멀티 Task 구조와 실시간 센서·모터 제어, 블루투스 무선 제어를 통해 장애물 회피 및 경로 추종을 실현합니다.
