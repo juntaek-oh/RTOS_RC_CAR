@@ -16,14 +16,14 @@
 </table>
 
 <div align="center">
-```
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![OpenCV](https://img.shields.io/badge/OpenCV-4.5+-green.svg)](https://opencv.org/)
 [![YOLOv4](https://img.shields.io/badge/YOLOv4-Tiny-red.svg)](https://github.com/AlexeyAB/darknet)
 **STM32CubeIDE와 FreeRTOS로 구현한 자율주행 RC카 프로젝트**  
 *멀티 Task 구조와 실시간 센서·모터 제어, 블루투스 무선 제어로 장애물 회피 및 경로 추종을 실현합니다.*
-```
+
 </div>
 
 ---
@@ -92,10 +92,12 @@ RTOS_RC_CAR/
 
 ## ⚙️ 설정
 #### 웹캠 설정 예시 (`webcam_blackbox_config.json`)
-{ "camera": { "device_id": 0, "width": 1280, "height": 720, "fps": 30 }, "detection": { "detection_interval": 1, "confidence_threshold": 0.5 } }
+{ "camera": { "device_id": 0, "width": 1280, "height": 720, "fps": 30 }, 
+  "detection": { "detection_interval": 1, "confidence_threshold": 0.5 } }
 
 #### 하이브리드 분석 설정 (`hybrid_blackbox_config.json`)
-{ "youtube": { "url": "your_default_url", "quality": "720p" }, "tracking": { "movement_threshold": 1.5, "iou_threshold": 0.25 } }
+{ "youtube": { "url": "your_default_url", "quality": "720p" }, 
+  "tracking": { "movement_threshold": 1.5, "iou_threshold": 0.25 } }
 
 #### 주요 파라미터 요약
 - PWM: 400~850 사용, 모드별 속도/회전차별 조정
