@@ -16,12 +16,14 @@
 </table>
 
 <div align="center">
+```
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![OpenCV](https://img.shields.io/badge/OpenCV-4.5+-green.svg)](https://opencv.org/)
 [![YOLOv4](https://img.shields.io/badge/YOLOv4-Tiny-red.svg)](https://github.com/AlexeyAB/darknet)
 **STM32CubeIDE와 FreeRTOS로 구현한 자율주행 RC카 프로젝트**  
 *멀티 Task 구조와 실시간 센서·모터 제어, 블루투스 무선 제어로 장애물 회피 및 경로 추종을 실현합니다.*
+```
 </div>
 
 ---
