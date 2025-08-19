@@ -16,10 +16,10 @@
 </table>
 
 <div align="center">
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![OpenCV](https://img.shields.io/badge/OpenCV-4.5+-green.svg)](https://opencv.org/)
-[![YOLOv4](https://img.shields.io/badge/YOLOv4-Tiny-red.svg)](https://github.com/AlexeyAB/darknet)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+![OpenCV](https://img.shields.io/badge/OpenCV-4.5+-green.svg)](https://opencv.org/)
+![YOLOv4](https://img.shields.io/badge/YOLOv4-Tiny-red.svg)](https://github.com/AlexeyAB/darknet)
 **STM32CubeIDE와 FreeRTOS로 구현한 자율주행 RC카 프로젝트**
 *멀티 Task 구조와 실시간 센서·모터 제어, 블루투스 무선 제어를 통해 장애물 회피 및 경로 추종을 실현합니다.*
 [🎯 주요 기능](#-주요-기능) •
@@ -72,7 +72,7 @@
 ---
 
 ## 🏗️ 시스템 아키텍처
-\`\`\`
+```
 RTOS_RC_CAR/
 ├── 🐍 black\_box\_webcam.py           # 실시간 웹캠 모드
 ├── 🐍 hybrid\_blackbox.py            # YouTube/MP4 분석 모드
@@ -89,7 +89,7 @@ RTOS_RC_CAR/
    - yolov4-tiny.weights (YOLO 가중치)
    - yolov4-tiny.cfg (YOLO 설정)  
    - coco.names (클래스 이름)
-\`\`\`
+```
 ### 🔄 처리 흐름
 1. **영상 입력** → 웹캠/YouTube/MP4
 2. **전처리** → 해상도 조정, 프레임 추출
@@ -112,43 +112,43 @@ RTOS_RC_CAR/
 | **Python** | 3.8+      | 3.9+         | 3.10+       |
 ### 📦 설치 과정
 #### 1️⃣ 저장소 복제
-\`\`\`bash
+```bash
 git clone [https://github.com/juntaek-oh/RTOS_RC_CAR.git](https://github.com/juntaek-oh/RTOS_RC_CAR.git)
 cd RTOS_RC_CAR
-\`\`\`
+```
 #### 2️⃣ 의존성 설치
-\`\`\`bash
+```bash
 pip install -r requirements.txt
-\`\`\`
+```
 #### 3️⃣ AI 모델 다운로드
 **Windows:**
-\`\`\`bash
+```bash
 curl -L [https://github.com/AlexeyAB/darknet/releases/download/yolov4/yolov4-tiny.weights](https://github.com/AlexeyAB/darknet/releases/download/yolov4/yolov4-tiny.weights) -o yolov4-tiny.weights
 curl -L [https://raw.githubusercontent.com/AlexeyAB/darknet/master/cfg/yolov4-tiny.cfg](https://raw.githubusercontent.com/AlexeyAB/darknet/master/cfg/yolov4-tiny.cfg) -o yolov4-tiny.cfg  
 curl -L [https://raw.githubusercontent.com/AlexeyAB/darknet/master/data/coco.names](https://raw.githubusercontent.com/AlexeyAB/darknet/master/data/coco.names) -o coco.names
-\`\`\`
+```
 **Linux/macOS:**
-\`\`\`bash
+```bash
 wget [https://github.com/AlexeyAB/darknet/releases/download/yolov4/yolov4-tiny.weights](https://github.com/AlexeyAB/darknet/releases/download/yolov4/yolov4-tiny.weights)
 wget [https://raw.githubusercontent.com/AlexeyAB/darknet/master/cfg/yolov4-tiny.cfg](https://raw.githubusercontent.com/AlexeyAB/darknet/master/cfg/yolov4-tiny.cfg)
 wget [https://raw.githubusercontent.com/AlexeyAB/darknet/master/data/coco.names](https://raw.githubusercontent.com/AlexeyAB/darknet/master/data/coco.names)
-\`\`\`
+```
 ### ▶️ 실행 방법
 #### 🔴 실시간 웹캠 모드
-\`\`\`bash
+```bash
 python black\_box\_webcam.py
-\`\`\`
+```
 #### 📺 YouTube/MP4 분석 모드  
-\`\`\`bash
+```bash
 python hybrid\_blackbox.py
-\`\`\`
+```
 
 ---
 
 ## 📖 사용법
 ### 🔴 웹캠 실시간 모드
 실시간으로 웹캠을 통해 앞차의 출발을 감지합니다.
-\`\`\`
+```
 ┌─────────────────────────────────────────────────┐
 │ 🔴 REC 14:30:25 | FPS: 28.5 | 추적: 3 | 출발: 1 │
 ├─────────────────────────────────────────────────┤
@@ -162,7 +162,7 @@ python hybrid\_blackbox.py
 │         ═══════ 차선 중심선 ═══════            │
 └─────────────────────────────────────────────────┘
 [SPACE] 일시정지  [S] 스크린샷  [Q] 종료
-\`\`\`
+```
 **주요 기능:**
 - 🎬 **자동 녹화**: 10분 단위 세그먼트로 자동 저장
 - 🎯 **실시간 추적**: 여러 차량 동시 추적 및 ID 관리  
@@ -170,7 +170,7 @@ python hybrid\_blackbox.py
 - 📊 **상태 표시**: 실시간 FPS, 추적 차량 수, 출발 횟수 표시
 ### 📺 YouTube/MP4 분석 모드
 YouTube URL이나 MP4 파일을 분석하여 앞차 출발 패턴을 학습합니다.
-\`\`\`
+```
 ┌─────────────────────────────────────────────────┐
 │ 📺 YouTube Mode | 15:30 / 45:20 (34%) | SEEK: ON │
 ├─────────────────────────────────────────────────┤
@@ -182,7 +182,7 @@ YouTube URL이나 MP4 파일을 분석하여 앞차 출발 패턴을 학습합�
 │                      🚦 GREEN                   │
 └─────────────────────────────────────────────────┘
 [ARROWS] 시간이동  [T] 점프설정  [SPACE] 일시정지  [Q] 종료
-\`\`\`
+```
 **주요 기능:**
 - 🎥 **3가지 모드**: YouTube 스트리밍/다운로드/로컬 MP4 파일
 - ⏯️ **시간 제어**: 화살표 키로 정밀 시간 탐색
@@ -264,31 +264,31 @@ YouTube URL이나 MP4 파일을 분석하여 앞차 출발 패턴을 학습합�
 ## 🔧 문제해결
 ### ❌ 자주 발생하는 문제
 #### 🚫 모델 파일 없음 오류
-\`\`\`bash
+```bash
 FileNotFoundError: yolov4-tiny.weights
-\`\`\`
+```
 **해결방법:**
-\`\`\`bash
+```bash
 wget [https://github.com/AlexeyAB/darknet/releases/download/yolov4/yolov4-tiny.weights](https://github.com/AlexeyAB/darknet/releases/download/yolov4/yolov4-tiny.weights)
 wget [https://raw.githubusercontent.com/AlexeyAB/darknet/master/cfg/yolov4-tiny.cfg](https://raw.githubusercontent.com/AlexeyAB/darknet/master/cfg/yolov4-tiny.cfg)
 wget [https://raw.githubusercontent.com/AlexeyAB/darknet/master/data/coco.names](https://raw.githubusercontent.com/AlexeyAB/darknet/master/data/coco.names)
-\`\`\`
+```
 #### 📹 웹캠 연결 실패
-\`\`\`bash
+```bash
 cv2.error: Cannot open camera
-\`\`\`
+```
 **해결방법:**
-\`\`\`json
+```json
 // webcam\_blackbox\_config.json에서 device\_id 변경
 {
   "camera": {
     "device\_id": 1    // 0 → 1로 변경 후 재시도
   }
 }
-\`\`\`
+```
 #### 🐌 성능 저하 문제
 **해결방법:**
-\`\`\`json
+```json
 // 성능 최적화 설정
 {
   "camera": {
@@ -300,15 +300,15 @@ cv2.error: Cannot open camera
     "detection\_interval": 3  // AI 분석 주기 늘림
   }
 }
-\`\`\`
+```
 #### 📺 YouTube 다운로드 오류
-\`\`\`bash
+```bash
 yt-dlp ERROR
-\`\`\`
+```
 **해결방법:**
-\`\`\`bash
+```bash
 pip install --upgrade yt-dlp
-\`\`\`
+```
 ### 🚨 긴급 상황 대처
 | 상황             | 해결 키 | 설명                |
 |------------------|---------|---------------------|
