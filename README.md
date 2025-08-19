@@ -1,227 +1,146 @@
-# 🚗 FreeRTOS 기반 STM32 자율주행 RC카
+# FreeRTOS 기반 STM32 자율주행 RC카
 
-<table>
-  <tr>
-    <td width="50%">
-      하이브리드 블랙박스 영상<br>
-      <img src="https://github.com/user-attachments/assets/55caa8fc-b178-4640-9e15-2ad3bab294ad"><br>
-      <img src="https://github.com/user-attachments/assets/f832f5c1-f685-4ade-97a5-10bc61b4dd2e">
-    </td>
-    <td width="50%">
-      웹캠 블랙박스 영상<br>
-      <img src="https://github.com/user-attachments/assets/94f06c32-7f0b-455c-80cd-50aec259a48d"><br>
-      <img src="https://github.com/user-attachments/assets/dd0ed0d7-2f6c-44e8-a775-a90fcd987fd3">
-    </td>
-  </tr>
-</table>
+<img src="https://github.com/user-attachments/assets/5129212e-a56d-4a65-9e91-40769a18b2fb" width="350"/>
 
-<div align="center">
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![OpenCV](https://img.shields.io/badge/OpenCV-4.5+-green.svg)](https://opencv.org/)
-[![YOLOv4](https://img.shields.io/badge/YOLOv4-Tiny-red.svg)](https://github.com/AlexeyAB/darknet)
-
-
-
-
-**STM32CubeIDE와 FreeRTOS로 구현한 자율주행 RC카 프로젝트**  
-*멀티 Task 구조와 실시간 센서·모터 제어, 블루투스 무선 제어로 장애물 회피 및 경로 추종을 실현합니다.*
-
-</div>
+<img src="https://github.com/user-attachments/assets/95b3667e-6938-45e2-a393-8460dc290677" width="350"/>
 
 ---
 
-## 📋 목차
-- [🎯 주요 기능](#-주요-기능)
-- [🏗️ 시스템 아키텍처](#-시스템-아키텍처)
-- [📦 디렉토리 구조](#-디렉토리-구조)
-- [⚙️ 설정](#️-설정)
-- [🚀 설치 및 실행](#-설치-및-실행)
-- [📖 사용법](#-사용법)
-- [🎛️ 키 조작법](#️-키-조작법)
-- [📊 성능 정보](#-성능-정보)
-- [🔧 문제해결](#-문제해결)
-- [🛠️ 개발 정보](#️-개발-정보)
-- [🤝 기여하기](#-기여하기)
-- [📞 연락처](#-연락처)
+STM32CubeIDE와 FreeRTOS로 구현한 자율주행 RC카 프로젝트입니다. 멀티 Task 구조와 실시간 센서·모터 제어, 블루투스 무선 제어를 통해 장애물 회피 및 경로 추종을 실현합니다.
 
 ---
 
-## 🎯 주요 기능
+## 주요 특징
 
-- **FreeRTOS 기반 멀티태스킹**: 초음파 센서, 모터제어 Task 분리
-- **실시간 장애물 감지**: HC-SR04 센서 3개 활용(전방/좌/우)
-- **블루투스 무선 제어**: HC-06/05 UART 통신, 수동/자동 모드 지원
-- **PWM 기반 모터 구동**: 정밀 속도/방향 조절
-- **지능형 탈출 알고리즘**: 막힘 감지→후진/회전 시퀀스
-- **모듈화된 코드/RTOS-aware 디버깅**
-- **사용자 인터페이스**: 실시간 주행 상태 및 로깅
+### FreeRTOS 기반 멀티태스킹 아키텍처
+- **Ultrasonic Task**: 3개 초음파 센서(HC-SR04) 실시간 거리 측정
+- **Moving Task**: 블루투스 명령 수신 및 자율주행 로직 처리
+- Task 우선순위와 스케줄링으로 빠르고 안정적인 제어 실현
 
----
+### 실시간 주행 제어 시스템
+- 전방, 좌측, 우측 초음파 센서 기반 360도 장애물 감지
+- 지능형 탈출 알고리즘으로 복잡한 미로 환경 대응
+- PWM 모터 제어를 통한 정밀한 속도 및 방향 조절
 
-## 🏗️ 시스템 아키텍처
+### 블루투스 무선 제어
+- UART6 기반 HC-06/05 블루투스 모듈 연동
+- 수동 제어(F/B/L/R/S) 및 자동 모드(Z) 지원
+- 실시간 명령 처리 및 상태 피드백
 
-아래 다이어그램은 RTOS_RC_CAR 시스템의 구성 요소와 데이터 흐름을 보여줍니다:
-
-```mermaid
-graph TD
-    subgraph "입력 (Input)"
-        A[HC-SR04 초음파 센서<br>전방/좌/우 거리 측정]
-        B[HC-06 블루투스<br>명령 수신 (F/B/L/R/S/Z)]
-    end
-    
-    subgraph "처리 및 분석 (Processing & Analysis)"
-        C[Ultrasonic Task<br>실시간 거리 계산 (TIM1/2/4)]
-        D[Moving Task<br>자율주행 로직 / 탈출 알고리즘]
-        E[PWM 제어<br>모터 속도/방향 (TIM3)]
-    end
-    
-    subgraph "출력 및 피드백 (Output & Feedback)"
-        F[L298N 드라이버<br>DC 모터 구동 (좌/우)]
-        G[UART 로그<br>상태 피드백 / 실시간 모니터링]
-    end
-    
-    A -->|거리 데이터| C
-    B -->|명령 데이터| D
-    C -->|처리된 데이터| D
-    D -->|제어 신호| E
-    E -->|PWM 신호| F
-    D -->|상태 정보| G
-```
+### 디버깅 및 모듈화
+- STM32CubeIDE RTOS-aware 디버깅 지원
+- 구조화된 코드와 모듈 분리로 유지보수 용이
+- Timer Input Capture를 활용한 정밀한 거리 측정
 
 ---
 
-## 📦 디렉토리 구조
-```
+## 하드웨어 구성
+
+- **MCU**: STM32F411 (ARM Cortex-M4)
+- **센서**: HC-SR04 초음파 센서 3개 (전방/좌/우)
+- **모터**: L298N 모터 드라이버, DC 기어 모터 2개
+- **통신**: HC-06 블루투스 모듈 (UART6)
+- **타이머**: TIM1/2/4 (센서), TIM3 (PWM), TIM11 (시스템)
+
+---
+
+## 소프트웨어 아키텍처
+
+### Task 구성
+// 초음파 센서 Task (Normal Priority)
+void Ultrasonic_01(void *argument) {
+HCSR04_Trigger1(); // 우측 센서
+HCSR04_Trigger2(); // 중앙 센서
+HCSR04_Trigger3(); // 좌측 센서
+}
+
+// 모터 제어 Task (Low Priority)
+void Moving_01(void *argument) {
+// 블루투스 명령 처리
+// 자율주행 로직 실행
+if (isAutoMode) moving();
+}
+
+### 핵심 알고리즘
+- **장애물 회피**: 3방향 센서 데이터 융합으로 최적 경로 결정
+- **탈출 모드**: 막힌 상황 감지 시 지능형 후진-회전 시퀀스
+- **PWM 제어**: 좌우 모터 독립 제어로 정밀한 조향 구현
+
+---
+
+## 사용 방법
+
+### 1. 프로젝트 설정
+git clone https://github.com/juntaek-oh/RTOS_RC_CAR.git
+- STM32CubeIDE에서 Import → Existing Projects into Workspace
+
+### 2. 빌드 및 플래시
+- 보드 연결 후 Build → Debug/Run 실행
+- FreeRTOS 설정: TIM11 시스템 타이머, 1ms tick
+
+### 3. 블루투스 제어
+**수동 모드 명령어:**
+- `F`: 전진 (400 PWM)
+- `B`: 후진 (400 PWM)  
+- `L`: 좌회전 (850 PWM)
+- `R`: 우회전 (850 PWM)
+- `S`: 정지
+- `Z`: 자동 모드 활성화
+
+**자동 모드:**
+- 센서 기반 자율주행 시작
+- 장애물 감지 시 자동 회피
+- 막힌 상황에서 탈출 알고리즘 실행
+
+---
+
+## 기술 스택
+
+- **MCU/IDE**: STM32F411, STM32CubeIDE
+- **RTOS**: FreeRTOS v10.3.1, CMSIS-RTOS v2
+- **드라이버**: HAL/LL 드라이버
+- **언어**: C
+- **통신**: UART, PWM, GPIO, Timer Input Capture
+
+---
+
+## 성과 및 특징
+
+### 성능 지표
+- **90% 이상 주행 정확도** - 다양한 환경에서 안정적 자율주행
+- **실시간 반응성** - Task 기반 병렬 처리로 센서-모터 지연 최소화
+- **복잡한 미로 대응** - 막힌 상황 감지 및 지능형 탈출 알고리즘
+
+### 기술적 성취
+- FreeRTOS 멀티태스킹으로 센서와 제어 로직 분리
+- Timer Input Capture 활용한 정밀한 거리 측정
+- 블루투스 기반 실시간 원격 제어 구현
+- 모듈화된 코드 구조로 확장성과 유지보수성 향상
+
+---
+
+## 파일 구조
+
 RTOS_RC_CAR/
-├── 🐍 black\_box\_webcam.py           # 실시간 웹캠 모드
-├── 🐍 hybrid\_blackbox.py            # YouTube/MP4 분석 모드
-├── 🐍 tts\_config.py                 # TTS 음성 설정
-├── 🐍 tts\_settings.py               # TTS 세부 설정
-├── ⚙️ hybrid\_blackbox\_config.json   # 하이브리드 모드 설정
-├── ⚙️ webcam\_blackbox\_config.json   # 웹캠 설정
-├── 📋 requirements.txt              # 의존성 패키지
-├── 📖 README.md                     # 프로젝트 문서
-├── 📁 downloads/                    # 다운로드된 영상 (자동 생성)
-├── 📁 webcam\_output/               # 웹캠 녹화 파일 (자동 생성)
-└── 📁 log/                         # 로그 파일 (자동 생성)
-※ AI 모델 파일은 별도 다운로드 필요:
-   - yolov4-tiny.weights (YOLO 가중치)
-   - yolov4-tiny.cfg (YOLO 설정)  
-   - coco.names (클래스 이름)
-```
----
-
-## ⚙️ 설정
-#### 웹캠 설정 예시 (`webcam_blackbox_config.json`)
-{ "camera": { "device_id": 0, "width": 1280, "height": 720, "fps": 30 }, 
-  "detection": { "detection_interval": 1, "confidence_threshold": 0.5 } }
-
-#### 하이브리드 분석 설정 (`hybrid_blackbox_config.json`)
-{ "youtube": { "url": "your_default_url", "quality": "720p" }, 
-  "tracking": { "movement_threshold": 1.5, "iou_threshold": 0.25 } }
-
-#### 주요 파라미터 요약
-- PWM: 400~850 사용, 모드별 속도/회전차별 조정
-- 시스템 tick: 1ms (TIM11)
-- 블루투스 명령: F, B, L, R, S, Z
+├── Inc/
+│ ├── FreeRTOSConfig.h # FreeRTOS 설정
+│ ├── main.h # 메인 헤더
+│ ├── ultrasonic.h # 센서/모터 제어
+│ └── ...
+├── Src/
+│ ├── main.c # 메인 함수, 하드웨어 초기화
+│ ├── freertos.c # Task 정의 및 스케줄러
+│ ├── ultrasonic.c # 센서 및 모터 제어 로직
+│ └── ...
+└── README.md
 
 ---
 
-## 🚀 설치 및 실행
+## 데모 영상
 
-### 필수 사양
-| 구분    | 사양         |
-|-----------|--------------|
-| MCU       | STM32F411    |
-| IDE       | STM32CubeIDE |
-| RTOS      | FreeRTOS v10.3, CMSIS v2 |
-| 기타      | HC-SR04, HC-06, L298N, DC모터, UART, PWM, Timer |
-
-### 설치 과정
-1. 저장소 복제
-- git clone https://github.com/juntaek-oh/RTOS_RC_CAR.git
-- cd RTOS_RC_CAR
-
-3. CubeIDE에서 프로젝트 Import (기존 프로젝트)
-4. 아키텍처 맞게 각 디바이스/선 연결 후 `Build → Debug/Run 실행`
-5. 블루투스 연결 시 HC-06 페어링
-6. 명령 전송(F/B/L/R/S/Z) 및 센서값 실시간 확인
+실제 동작 모습은 상단 GIF(`demo.gif`) 또는 [GitHub 저장소](https://github.com/juntaek-oh/RTOS_RC_CAR)에서 확인 가능합니다.
 
 ---
 
-## 📖 사용법
-
-### 모드별 명령어
-- F: 전진, B: 후진, L: 좌회전, R: 우회전, S: 정지, Z: 자동주행 모드
-- 자동 모드 활성화 후 장애물/미로에 따라 자동 탈출/회전 제어
-
-### 실시간 상태확인 & 로그
-- UART 메시지로 센서값 및 모터상태 수신
-- 주요 이벤트 별도 로그로 저장(향후 통계/분석 활용 가능)
-
----
-
-## 🎛️ 키 조작법
-| 키         | 기능         |     
-|------------|--------------|
-| F/B/L/R/S  | 모터 동작/정지/회전 |
-| Z          | 자동주행 전환   |
-| RESET      | 시스템 리셋    |
-| DEBUG      | 실시간 정보 확인 |
-
-
----
-
-## 📊 성능 정보
-
-| 실험환경    | 주행 정확도 | 실시간 반응성 | 장애물 회피 | 미로 탈출성공률 |
-|-------------|-------------|---------------|-------------|-----------------|
-| 실내(실험실) | 90% 이상    | 평균 0.1초    | 정상동작    | 95%             |
-
----
-
-## 🔧 문제해결
-
-- **센서 측정 오류**: 배선/타이밍 확인, Echo/Trig 자가테스트
-- **모터 미동작**: L298N 연결/전원 확인, PWM 범위 재설정
-- **블루투스 지연/미연결**: 페어링 초기화 또는 UART 설정값 확인
-- **CubeIDE 빌드 오류**: 경로, 설정, 파일명 중복 확인
-- **RTOS Task 충돌/멈춤**: 우선순위/동기화 논리 확인, Tick 주기 조정
-
----
-
-## 🛠️ 개발 정보
-
-- 멀티태스킹 분리 구조 (센서/제어/통신)
-- 고성능 Timer + PWM + Input Capture 활용
-- 전체 코드 모듈별 분리(확장성/유지보수 우수)
-- 실시간 디버깅(CubeIDE RTOS-aware 기능)
-- 버전관리 및 주요 업데이트, 향후 고급 알고리즘/클라우드 연동 계획
-
----
-
-## 🤝 기여하기
-
-- Fork 및 Branch 생성 (`git checkout -b feature/AmazingFeature`)
-- 변경사항 커밋(`git commit -m 'Add some AmazingFeature'`)
-- 원격 저장소 푸시(`git push origin feature/AmazingFeature`)
-- Github Pull Request 생성
-- 버그/기능 문의: Issues 탭에 OS, MCU/센서/IDE 버전, 오류상세, 재현단계 포함해 제출
-
----
-
-## 📞 연락처
-
-- 이메일: [ojt8416@gmail.com](mailto:ojt8416@gmail.com)
-- Issues: [링크](https://github.com/juntaek-oh/RTOS_RC_CAR/issues)
-
----
-
-<div align="center">
-🚗 안전한 운전의 시작, AI 블랙박스/RC카 시스템과 함께!  
-**실시간 차량 추적과 장애물 감지를 FreeRTOS 기반 STM32로 구현**  
-⭐ 도움이 되셨다면 Star와 Issue 환영!  
-🔄 Pull Requests 기여 대환영!
-</div>
+**문의 및 협업**  
+GitHub 이슈 및 PR 환영합니다.
