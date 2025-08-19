@@ -68,27 +68,24 @@
 ---
 
 ## 📦 디렉토리 구조
-
+```
 RTOS_RC_CAR/
-├── Inc/
-│ ├── FreeRTOSConfig.h # FreeRTOS 설정
-│ ├── main.h # 메인 헤더
-│ ├── ultrasonic.h # 센서/모터 제어
-│ └── ...
-├── Src/
-│ ├── main.c # 메인 함수, 하드웨어 초기화
-│ ├── freertos.c # Task 정의 및 스케줄러
-│ ├── ultrasonic.c # 센서/모터 제어 로직
-│ └── ...
-├── README.md
-├── downloads/ # 자동 생성 (예: 녹화/로그 등)
-├── webcam_output/
-├── log/
-└── model/
-├── yolov4-tiny.weights
-├── yolov4-tiny.cfg
-└── coco.names
-
+├── 🐍 black\_box\_webcam.py           # 실시간 웹캠 모드
+├── 🐍 hybrid\_blackbox.py            # YouTube/MP4 분석 모드
+├── 🐍 tts\_config.py                 # TTS 음성 설정
+├── 🐍 tts\_settings.py               # TTS 세부 설정
+├── ⚙️ hybrid\_blackbox\_config.json   # 하이브리드 모드 설정
+├── ⚙️ webcam\_blackbox\_config.json   # 웹캠 설정
+├── 📋 requirements.txt              # 의존성 패키지
+├── 📖 README.md                     # 프로젝트 문서
+├── 📁 downloads/                    # 다운로드된 영상 (자동 생성)
+├── 📁 webcam\_output/               # 웹캠 녹화 파일 (자동 생성)
+└── 📁 log/                         # 로그 파일 (자동 생성)
+※ AI 모델 파일은 별도 다운로드 필요:
+   - yolov4-tiny.weights (YOLO 가중치)
+   - yolov4-tiny.cfg (YOLO 설정)  
+   - coco.names (클래스 이름)
+```
 ---
 
 ## ⚙️ 설정
