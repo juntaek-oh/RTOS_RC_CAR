@@ -356,17 +356,13 @@ Issues 탭에서 다음 정보와 함께 버그를 리포트해주세요:
 - **에러 메시지**: 전체 traceback
 - **재현 단계**: 1-2-3 단계
 
----
 
-## 📄 라이선스
-이 프로젝트는 MIT License 하에 배포됩니다. 자세한 내용은 [LICENSE](LICENSE) 파일을 참고하세요.
 
 ---
 
 ## 📞 연락처
 - 📧 **이메일**: [ojt8416@gmail.com](mailto:ojt8416@gmail.com)
 - 💬 **Issues**: [GitHub Issues](https://github.com/juntaek-oh/RTOS_RC_CAR/issues)
-- 📖 **Wiki**: [프로젝트 위키](https://github.com/juntaek-oh/RTOS_RC_CAR/wiki)
 
 ---
 
