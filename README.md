@@ -122,8 +122,8 @@ RTOS_RC_CAR/
 
 ### 설치 과정
 1. 저장소 복제
-git clone https://github.com/juntaek-oh/RTOS_RC_CAR.git
-cd RTOS_RC_CAR
+- git clone https://github.com/juntaek-oh/RTOS_RC_CAR.git
+- cd RTOS_RC_CAR
 
 3. CubeIDE에서 프로젝트 Import (기존 프로젝트)
 4. 아키텍처 맞게 각 디바이스/선 연결 후 `Build → Debug/Run 실행`
