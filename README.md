@@ -62,14 +62,33 @@
 
 ## 🏗️ 시스템 아키텍처
 
-- **메인 MCU**: STM32F411 (Cortex-M4)
-- **센서 입력**: HC-SR04 ×3 (초음파 거리)
-- **저수준 제어**: PWM (TIM3), Timer Input Capture (TIM1/2/4/11)
-- **모터 구동**: L298N 드라이버 + DC 기어모터 ×2
-- **통신**: HC-06 블루투스 (UART6)
-- **RTOS Task 구조**:
-  - Ultrasonic Task (센서측정, Normal Priority)
-  - Moving Task (모터·명령처리, Low Priority)
+아래 다이어그램은 RTOS_RC_CAR 시스템의 구성 요소와 데이터 흐름을 보여줍니다:
+
+```mermaid
+graph TD
+    subgraph "입력 (Input)"
+        A[HC-SR04 초음파 센서<br>전방/좌/우 거리 측정]
+        B[HC-06 블루투스<br>명령 수신 (F/B/L/R/S/Z)]
+    end
+    
+    subgraph "처리 및 분석 (Processing & Analysis)"
+        C[Ultrasonic Task<br>실시간 거리 계산 (TIM1/2/4)]
+        D[Moving Task<br>자율주행 로직 / 탈출 알고리즘]
+        E[PWM 제어<br>모터 속도/방향 (TIM3)]
+    end
+    
+    subgraph "출력 및 피드백 (Output & Feedback)"
+        F[L298N 드라이버<br>DC 모터 구동 (좌/우)]
+        G[UART 로그<br>상태 피드백 / 실시간 모니터링]
+    end
+    
+    A -->|거리 데이터| C
+    B -->|명령 데이터| D
+    C -->|처리된 데이터| D
+    D -->|제어 신호| E
+    E -->|PWM 신호| F
+    D -->|상태 정보| G
+```
 
 ---
 
