@@ -6,12 +6,12 @@
 
 ### 자율주행 모드
 <img src="https://github.com/user-attachments/assets/5129212e-a56d-4a65-9e91-40769a18b2fb" width="350"/>
-### 장애물 회피
-<img src="https://github.com/user-attachments/assets/95b3667e-6938-45e2-a393-8460dc290677" width="350"/>
+
 </td>
 <td width="50%">
 ### 장애물 회피
-
+<img src="https://github.com/user-attachments/assets/95b3667e-6938-45e2-a393-8460dc290677" width="350"/>
+    
 </td>
 </tr>
 </table>
